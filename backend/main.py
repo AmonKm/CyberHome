@@ -2,6 +2,7 @@ from pathlib import Path
 import yaml
 import time
 import json
+from fastapi import FastAPI
 from fetchers.rss import fetch_rss
 from fetchers.github import fetch_github
 CONFIG_DIR = Path(__file__).resolve().parent.parent / "config"
@@ -28,6 +29,10 @@ def get_data():
         json.dump(datas, f)
     return datas
 
+app = FastAPI()
+@app.get("/api/dashboard")
+def endpoint_dashboard():
+    return get_data()
 
 if __name__ == '__main__':
     get_data()

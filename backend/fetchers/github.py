@@ -1,5 +1,6 @@
 import requests
 
+
 def parse_github(item_github:dict)->dict:
     return {"name":item_github["full_name"], "owner_url":item_github["owner"]["html_url"],"url":item_github["html_url"],"creation":item_github["created_at"],"update":item_github["updated_at"]}
 
