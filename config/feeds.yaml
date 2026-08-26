@@ -1,10 +1,8 @@
 categories:
-  actus:
+  actus-rss:
     - nom: "CERT-FR (alertes)"
-      type: rss
       url: "https://www.cert.ssi.gouv.fr/alerte/feed/"
-  outils:
+  outils-github:
     - nom: "Recherche outils cyber"
-      type: github
       query: "topic:security-tools"
       sort: stars

@@ -1,21 +1,23 @@
 from pathlib import Path
 import yaml
+import time
+import json
 import feedparser
-CONFIG_DIR = Path(__file__).resolve().parent.parent.parent / "config"
 
-with open("config/feeds.yaml") as f:
-    feeds = yaml.safe_load(f)
 
-datas = {"actus":[], "outils":[]}
+def published_parsed(article):
+    return article.published_parsed
+
+
 def fetch_rss(data:dict)->dict:
-    for source_actu in data["categories"]["actus"]:
+            
+    datas = {"actus-rss":[]}
+
+    for source_actu in data["categories"]["actus-rss"]:
         flux = feedparser.parse(source_actu["url"])
-        for article in flux.entries[-5:]:
-            print(article)
+        flux_trie = sorted(flux.entries, key=published_parsed)
+        
+        for article in flux_trie[-5:]:
+            datas["actus-rss"].append({"title": article.title, "desc": article.description,"link": article.link, "published": article.published, "source": source_actu["nom"]})
 
-def published_parsed():
-    return
-    
-
-print(fetch_rss(feeds))
-print(feeds)
+    return datas
