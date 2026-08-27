@@ -15,11 +15,11 @@ cyberhome/
 │   └── cache/           # données récupérées, stockées en JSON
 ├── config/
 │   ├── feeds.yaml       # liste des flux RSS + métadonnées (titre, catégorie)
-│   ├── tools.yaml       # outils curés à la main
-│   ├── links.yaml       # tutos/articles curés
+│   ├── tools.yaml       #
+│   ├── links.yaml       #
 │   └── dashboard.yaml   # layout : sections affichées, ordre, nb d'items par section
 ├── frontend/
 │   ├── index.html
 │   ├── style.css
-│   └── script.js        # fetch les endpoints API et construit le DOM dynamiquement
+│   └── script.js        # fetch les endpoints API et construit la page
 └── docker-compose.yml
