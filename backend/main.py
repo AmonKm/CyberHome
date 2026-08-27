@@ -12,16 +12,16 @@ CACHE_DIR = Path(__file__).resolve().parent.parent / "backend" / "cache"
 
 def get_data():
     fichier_cache = CACHE_DIR / "data.json"
-    with open(CONFIG_DIR / "feeds.yaml") as f:
+    with open(CONFIG_DIR / "feeds.yaml", encoding="utf-8") as f:
         feeds = yaml.safe_load(f)
     if fichier_cache.exists():
         age = time.time() - fichier_cache.stat().st_mtime
         if age < 900:
-            with open(fichier_cache) as f:
+            with open(fichier_cache, encoding="utf-8") as f:
                 return json.load(f)
     
     datas = {"actus-rss": [], "outils-github": []}
-    with open(CONFIG_DIR / "dashboard.yaml") as f:
+    with open(CONFIG_DIR / "dashboard.yaml", encoding="utf-8") as f:
         dashboard_config = yaml.safe_load(f)
     
     nb_actus = next(s["nb_items"] for s in dashboard_config["sections"] if s["cle_donnees"] == "actus-rss")
@@ -33,6 +33,7 @@ def get_data():
     datas["actus-rss"] = datas_rss["actus-rss"]
     datas["outils-github"] = datas_github["outils-github"]
     
+    CACHE_DIR.mkdir(exist_ok=True, parents=True)
     with open(fichier_cache, "w") as f:
         json.dump(datas, f)
     return datas
@@ -44,12 +45,12 @@ def endpoint_dashboard():
 
 @app.get("/api/dashboard-config")
 def endpoint_config():
-    with open(CONFIG_DIR / "dashboard.yaml") as f:
+    with open(CONFIG_DIR / "dashboard.yaml", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 @app.get("/api/links")
 def endpoint_links():
-    with open(CONFIG_DIR / "links.yaml") as f:
+    with open(CONFIG_DIR / "links.yaml", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
 
