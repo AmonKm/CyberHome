@@ -47,6 +47,11 @@ def endpoint_config():
     with open(CONFIG_DIR / "dashboard.yaml") as f:
         return yaml.safe_load(f)
 
+@app.get("/api/links")
+def endpoint_links():
+    with open(CONFIG_DIR / "links.yaml") as f:
+        return yaml.safe_load(f)
+
 
 app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="fronted")
 if __name__ == '__main__':

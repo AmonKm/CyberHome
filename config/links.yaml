@@ -1,1 +1,7 @@
-# A revoir
+liens:
+  - titre: "Compte GitHub"
+    description: "Mon compte GitHub personnel"
+    url: "https://github.com/AmonKm"
+  - titre: "HackTricks"
+    description: "Wiki de techniques de pentest et de contournement"
+    url: "https://book.hacktricks.xyz"

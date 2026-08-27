@@ -10,7 +10,13 @@ async function chargerData() {
     return config;
 }
 
-function rendreArticleRSS(item) {
+async function chargerLinks() {
+    const reponse = await fetch("/api/links");
+    const links = await reponse.json();
+    return links;
+}
+
+function intoHTML_RSS(item) {
     const bloc = document.createElement("div");
     bloc.className = "card";
 
@@ -28,7 +34,25 @@ function rendreArticleRSS(item) {
     return bloc;
 }
 
-function rendreRepoGithub(item) {
+function intoHTML_Links(item) {
+    const bloc = document.createElement("div");
+    bloc.className = "card";
+
+    const lien = document.createElement("a");
+    lien.href = item.url;
+    lien.textContent = item.titre;
+    lien.className = "card-titre";
+
+    const desc = document.createElement("p");
+    desc.textContent = item.desc;
+    desc.className = "card-desc";
+
+    bloc.appendChild(lien);
+    bloc.appendChild(desc);
+    return bloc;
+}
+
+function intoHTML_Github(item) {
     const bloc = document.createElement("div");
     bloc.className = "card card-github";
 
@@ -68,14 +92,25 @@ async function afficherDashboard() {
         for (const item of items) {
             let bloc;
             if (section.cle_donnees === "outils-github") {
-                bloc = rendreRepoGithub(item);
+                bloc = intoHTML_Github(item);
             } else if (section.cle_donnees === "actus-rss") {
-                bloc = rendreArticleRSS(item);
+                bloc = intoHTML_RSS(item);
             }
             conteneur.appendChild(bloc);
         }
         conteneurPrincipal.appendChild(conteneur);
     }
+    const links = await chargerLinks();
+    const titreLinks = document.createElement("h2");
+    titreLinks.textContent = "Liens Utiles";
+    conteneurPrincipal.appendChild(titreLinks);
+    const conteneurLinks = document.createElement("div");
+    conteneurLinks.className = "section-container";
+    for (const link of links.liens) {
+        const bloc = intoHTML_Links(link);
+        conteneurLinks.appendChild(bloc);
+    }
+    conteneurPrincipal.appendChild(conteneurLinks);
 }
 
 afficherDashboard();
