@@ -1,0 +1,12 @@
+sections:
+  - id: actus-rss
+    titre: "Dernières alertes"
+    endpoint: "/api/dashboard"
+    cle_donnees: "actus-rss"
+    nb_items: 5
+    
+  - id: outils-github
+    titre: "Outils Github"
+    endpoint: "/api/dashboard"
+    cle_donnees: "outils-github"
+    nb_items: 5
