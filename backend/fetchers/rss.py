@@ -17,6 +17,6 @@ def fetch_rss(data:dict, nb_items:int)->dict:
         flux_trie = sorted(flux.entries, key=published_parsed)
         
         for article in flux_trie[-nb_items:]:
-            datas["actus-rss"].append({"title": article.title, "desc": nettoyer_html(article.description),"link": article.link, "published": article.published, "source": source_actu["nom"]})
+            datas["actus-rss"].append({"title": article.title, "desc": nettoyer_html(article.description),"url": article.link, "published": article.published, "source": source_actu["name"]})
 
     return datas

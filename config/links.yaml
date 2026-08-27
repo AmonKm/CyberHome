@@ -1,7 +1,7 @@
-liens:
-  - titre: "Compte GitHub"
-    description: "Mon compte GitHub personnel"
+links:
+  - title: "Compte GitHub"
+    desc: "Mon compte GitHub personnel"
     url: "https://github.com/AmonKm"
-  - titre: "HackTricks"
-    description: "Wiki de techniques de pentest et de contournement"
+  - title: "HackTricks"
+    desc: "Wiki de techniques de pentest et de contournement"
     url: "https://book.hacktricks.xyz"

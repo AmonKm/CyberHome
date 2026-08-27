@@ -21,7 +21,7 @@ function intoHTML_RSS(item) {
     bloc.className = "card";
 
     const lien = document.createElement("a");
-    lien.href = item.link;
+    lien.href = item.url;
     lien.textContent = item.title;
     lien.className = "card-titre";
 
@@ -40,7 +40,7 @@ function intoHTML_Links(item) {
 
     const lien = document.createElement("a");
     lien.href = item.url;
-    lien.textContent = item.titre;
+    lien.textContent = item.title;
     lien.className = "card-titre";
 
     const desc = document.createElement("p");
@@ -106,7 +106,7 @@ async function afficherDashboard() {
     conteneurPrincipal.appendChild(titreLinks);
     const conteneurLinks = document.createElement("div");
     conteneurLinks.className = "section-container";
-    for (const link of links.liens) {
+    for (const link of links.links) {
         const bloc = intoHTML_Links(link);
         conteneurLinks.appendChild(bloc);
     }
