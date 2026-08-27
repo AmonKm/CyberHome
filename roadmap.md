@@ -7,7 +7,7 @@
 ### En cours
 - [ ] Création des élements selon les données, script JS
 ### A faire 
-- [ ] Stylisé la page (rouge et lien visible)
+- [X] Stylisé la page (rouge et lien visible)
 - [ ] Permettre de selectionner un article et d'ajouter une page "Favoris" avec une étoile
 - [ ] Pour beaucoup plus tard, permettre le suivi de projets
 - [ ] Permettre un management de la page web à la main
