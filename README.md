@@ -1,4 +1,5 @@
-# CyberHome
+<img width="3264" height="1836" alt="1000068892" src="https://github.com/user-attachments/assets/337de285-b884-4e19-8e0f-358fe30fb90b" />
+
 
 ![Python](https://img.shields.io/badge/Python-3.12+-3776AB?style=flat&logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)
