@@ -14,7 +14,8 @@
 
 ### En cours
 - [ ] Permettre de selectionner un article et d'ajouter une page "Favoris" avec une étoile
-- [ ] Commenter le code
+- [ ] Commenter le code (priorité)
+- [ ] Permettre de choisir le critère de recherche github (pas forcément par "star" mais choisir les projets "updated" etc.)
 
 ### A faire 
 - [ ] Pour beaucoup plus tard, permettre le suivi de projets
