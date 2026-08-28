@@ -10,18 +10,18 @@
 - [X] Ajouter des entrées links
 - [X] Permettre le déploiement simplifié de CyberHome
 - [X] Gestion d'erreur sur les fetchers
+- [X] Ajout d'un indicateur sur la page en cas de soucis de fetch
 
 ### En cours
 - [ ] Permettre de selectionner un article et d'ajouter une page "Favoris" avec une étoile
+- [ ] Commenter le code
 
 ### A faire 
 - [ ] Pour beaucoup plus tard, permettre le suivi de projets
 - [ ] Permettre un management de la page web à la main
-- [ ] Commenter le code
 - [ ] Faire une page de gestion des sources avec une liste prédéfinie
 - [ ] Lister un ensemble de sources possible (simplement dans sources.md pour du repérage)
 - [ ] Traduire le readme et les commentaires en anglais
-- [ ] Ajout d'un indicateur sur la page en cas de soucis de fetch
 - [ ] Tests / Fichier de tests
 - [ ] Permettre l'export/import de la config yaml pour permettre le partage de configs
 - [ ] Créer un .env.exemple avec un token Github pour les appels...

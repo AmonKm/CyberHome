@@ -93,6 +93,13 @@ h2 {
     filter: grayscale(0.4);
 }
 
+.empty-message {
+    color: #5c5c5c;
+    font-style: italic;
+    font-size: 0.9rem;
+    padding: 1rem 0;
+}
+
 .footer {
     margin-top: 5rem;
     padding-top: 2rem;

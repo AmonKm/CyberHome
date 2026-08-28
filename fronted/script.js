@@ -87,16 +87,21 @@ async function afficherDashboard() {
 
         const conteneur = document.createElement("div");
         conteneur.className = "section-container";
-
         const items = datas[section.cle_donnees];
-        for (const item of items) {
-            let bloc;
-            if (section.cle_donnees === "outils-github") {
-                bloc = intoHTML_Github(item);
-            } else if (section.cle_donnees === "actus-rss") {
-                bloc = intoHTML_RSS(item);
+        if (items.length === 0) {
+            const message = document.createElement("p");
+            message.textContent = "Aucun élément à afficher.";
+            conteneur.appendChild(message);
+        } else {
+            for (const item of items) {
+                let bloc;
+                if (section.cle_donnees === "outils-github") {
+                    bloc = intoHTML_Github(item);
+                } else if (section.cle_donnees === "actus-rss") {
+                    bloc = intoHTML_RSS(item);
+                }
+                conteneur.appendChild(bloc);
             }
-            conteneur.appendChild(bloc);
         }
         conteneurPrincipal.appendChild(conteneur);
     }
