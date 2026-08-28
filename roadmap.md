@@ -11,7 +11,7 @@
 
 ### En cours
 - [ ] Gestion d'erreur sur les fetchers
-- [ ] Permettre le déploiement simplifier de CyberHome
+- [ ] Permettre le déploiement simplifié de CyberHome
 - [ ] Permettre de selectionner un article et d'ajouter une page "Favoris" avec une étoile
 
 ### A faire 
