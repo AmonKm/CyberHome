@@ -50,6 +50,10 @@ uvicorn main:app --reload
 
 Le dashboard est accessible sur `http://127.0.0.1:8000/`.
 
+## Dashboard actuel (amené à évoluer) :
+<img width="1919" height="936" alt="image" src="https://github.com/user-attachments/assets/adb22126-0dc5-4d6d-a074-b0ca4a6c6ac2" />
+
+
 ## Configuration
 
 Les sources et le layout du dashboard se personnalisent directement dans les fichiers YAML du dossier `config/` :
