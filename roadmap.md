@@ -8,10 +8,10 @@
 - [X] Stylisé la page (rouge et lien visible)
 - [X] Création des élements selon les données, script JS
 - [X] Ajouter des entrées links
+- [X] Permettre le déploiement simplifié de CyberHome
+- [X] Gestion d'erreur sur les fetchers
 
 ### En cours
-- [ ] Gestion d'erreur sur les fetchers
-- [ ] Permettre le déploiement simplifié de CyberHome
 - [ ] Permettre de selectionner un article et d'ajouter une page "Favoris" avec une étoile
 
 ### A faire 

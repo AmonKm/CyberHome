@@ -11,12 +11,20 @@ def parse_github(item_github: dict) -> dict:
         "update": item_github["updated_at"]
     }
 
-def fetch_github(data:dict, nb_items:int)->dict:
-    datas = {"outils-github":[]}
+def fetch_github(data: dict, nb_items: int) -> dict:
+    datas = {"outils-github": []}
     for source_actu in data["categories"]["outils-github"]:
-        reponse = requests.get("https://api.github.com/search/repositories", params={"q": source_actu["query"], "sort": "stars", "per_page": nb_items})
-        data_json = reponse.json()
+        try:
+            reponse = requests.get(
+                "https://api.github.com/search/repositories",
+                params={"q": source_actu["query"], "sort": "stars", "per_page": nb_items}
+            )
+            reponse.raise_for_status()
+            data_json = reponse.json()
+        except requests.RequestException as e:
+            print(f"Erreur fetch GitHub : {source_actu['query']}: {e}")
+            continue
+
         for item in data_json["items"]:
             datas["outils-github"].append(parse_github(item))
     return datas
-

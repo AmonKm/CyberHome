@@ -14,6 +14,9 @@ def fetch_rss(data:dict, nb_items:int)->dict:
 
     for source_actu in data["categories"]["actus-rss"]:
         flux = feedparser.parse(source_actu["url"])
+        if flux.bozo or not flux.entries:
+            print(f"Flux RSS invalide ou vide : {source_actu['url']}")
+            continue
         flux_trie = sorted(flux.entries, key=published_parsed)
         
         for article in flux_trie[-nb_items:]:
