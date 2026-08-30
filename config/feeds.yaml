@@ -2,6 +2,11 @@ categories:
   actus-rss:
     - name: "CERT-FR (alertes)"
       url: "https://www.cert.ssi.gouv.fr/alerte/feed/"
+    - name: "ANSSI (actualités)"
+      url: "https://cyber.gouv.fr/actualites/rss/"
+    - name: "The Hacker News"
+      url: "https://feeds.feedburner.com/TheHackersNews"
+
   outils-github:
     - name: "Recherche outils cyber"
       query: "topic:security-tools"
