@@ -91,7 +91,7 @@ def endpoint_links():
     with open(CONFIG_DIR / "links.yaml", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
-# FR : Montre le répertoire fronted pour servir les fichiers statiques (HTML, CSS, JS) de l'application front-end.
+# FR : Monte le répertoire fronted pour servir les fichiers statiques (HTML, CSS, JS) de l'application front-end.
 # EN : Mounts the fronted directory to serve static files (HTML, CSS, JS) of the front-end application.
 app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="fronted")
 
