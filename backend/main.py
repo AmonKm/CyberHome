@@ -48,6 +48,39 @@ app = FastAPI()
 def endpoint_dashboard():
     return get_data()
 
+@app.get("/api/github-sort")
+def endpoint_github_sort(sort: str = "stars"):
+    cache_file = CACHE_DIR / f"github_{sort}.json"
+    if cache_file.exists():
+        age = time.time() - cache_file.stat().st_mtime
+        if age < 900:
+            with open(cache_file, encoding="utf-8") as f:
+                return json.load(f)
+
+    with open(CONFIG_DIR / "feeds.yaml", encoding="utf-8") as f:
+        feeds = yaml.safe_load(f)
+    with open(CONFIG_DIR / "dashboard.yaml", encoding="utf-8") as f:
+        dashboard_config = yaml.safe_load(f)
+
+    nb_outils = next(source["nb_items"] for source in dashboard_config["sections"] if source["cle_donnees"] == "outils-github")
+
+    for source in feeds["categories"]["outils-github"]:
+        source["sort"] = sort
+
+    result = fetch_github(feeds, nb_outils)
+
+    CACHE_DIR.mkdir(exist_ok=True, parents=True)
+    with open(cache_file, "w", encoding="utf-8") as f:
+        json.dump(result, f)
+
+    return result
+
+@app.get("/api/github-sort-options")
+def endpoint_github_sort_options():
+    with open(CONFIG_DIR / "feeds.yaml", encoding="utf-8") as f:
+        feeds = yaml.safe_load(f)
+    return feeds["categories"]["outils-github"][0].get("sort", ["stars"])
+
 @app.get("/api/dashboard-config")
 def endpoint_config():
     with open(CONFIG_DIR / "dashboard.yaml", encoding="utf-8") as f:

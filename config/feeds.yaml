@@ -5,4 +5,4 @@ categories:
   outils-github:
     - name: "Recherche outils cyber"
       query: "topic:security-tools"
-      sort: stars
+      sort: [stars, updated, forks]

@@ -90,6 +90,8 @@ function intoHTML_Github(item) {
 EN : This function displays the dashboard by loading the configuration, data, and links, then creating the corresponding HTML elements. */
 async function afficherDashboard() {
     const conteneurPrincipal = document.getElementById("dashboard-content");
+    conteneurPrincipal.innerHTML = ""; // vide tout le contenu précédent
+    
     const config = await chargerconfig();
     const datas = await chargerData();
 
@@ -97,9 +99,27 @@ async function afficherDashboard() {
         const titre = document.createElement("h2");
         titre.textContent = section.titre;
         conteneurPrincipal.appendChild(titre);
+        if (section.cle_donnees === "outils-github") {
+        const reponseOptions = await fetch("/api/github-sort-options");
+        const sortOptions = await reponseOptions.json();
+
+        const select = document.createElement("select");
+        select.id = "tri-github";
+        for (const opt of sortOptions) {
+            const option = document.createElement("option");
+            option.value = opt;
+            option.textContent = opt;
+            select.appendChild(option);
+        }
+        select.addEventListener("change", (e) => changerTriGithub(e.target.value));
+        conteneurPrincipal.appendChild(select);
+    }
 
         const conteneur = document.createElement("div");
         conteneur.className = "section-container";
+        if (section.cle_donnees === "outils-github") {
+            conteneur.id = "outils-github-container";
+        }
         const items = datas[section.cle_donnees];
         if (items.length === 0) {
             const message = document.createElement("p");
@@ -129,6 +149,17 @@ async function afficherDashboard() {
         conteneurLinks.appendChild(bloc);
     }
     conteneurPrincipal.appendChild(conteneurLinks);
+}
+
+async function changerTriGithub(sort) {
+    const reponse = await fetch(`/api/github-sort?sort=${sort}`);
+    const data = await reponse.json();
+    
+    const conteneur = document.getElementById("outils-github-container");
+    conteneur.innerHTML = "";
+    for (const item of data["outils-github"]) {
+        conteneur.appendChild(intoHTML_Github(item));
+    }
 }
 
 afficherDashboard();

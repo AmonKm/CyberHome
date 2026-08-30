@@ -20,7 +20,7 @@ def fetch_github(data: dict, nb_items: int) -> dict:
         try:
             reponse = requests.get(
                 "https://api.github.com/search/repositories",
-                params={"q": source_actu["query"], "sort": "stars", "per_page": nb_items} # FR : Fait la requête souhaitée à l'API GitHub avec un nombre d'items limité. EN : Makes the desired request to the GitHub API with a limited number of items.
+                params={"q": source_actu["query"], "sort": source_actu["sort"], "per_page": nb_items} # FR : Fait la requête souhaitée à l'API GitHub avec un nombre d'items limité. EN : Makes the desired request to the GitHub API with a limited number of items.
             )
             reponse.raise_for_status()
             data_json = reponse.json()
