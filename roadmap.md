@@ -11,13 +11,15 @@
 - [X] Permettre le déploiement simplifié de CyberHome
 - [X] Gestion d'erreur sur les fetchers
 - [X] Ajout d'un indicateur sur la page en cas de soucis de fetch
+- [X] Commenter le code (priorité)
 
 ### En cours
+- [ ] Faire une fonction pour récuperer le nb_items
 - [ ] Permettre de selectionner un article et d'ajouter une page "Favoris" avec une étoile
-- [ ] Commenter le code (priorité)
 - [ ] Permettre de choisir le critère de recherche github (pas forcément par "star" mais choisir les projets "updated" etc.)
 
 ### A faire 
+- [ ] Persister le choix de tri (écrire dans le cache et vérifier le sort) 
 - [ ] Pour beaucoup plus tard, permettre le suivi de projets
 - [ ] Permettre un management de la page web à la main
 - [ ] Faire une page de gestion des sources avec une liste prédéfinie
