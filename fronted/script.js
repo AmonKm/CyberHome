@@ -1,21 +1,29 @@
+/* FR : Cette fonction charge la configuration du dashboard depuis l'API et retourne les données JSON. 
+EN : This function loads the dashboard configuration from the API and returns the JSON data. */
 async function chargerconfig() {
     const reponse = await fetch("/api/dashboard-config");
     const config = await reponse.json();
     return config;
 }
 
+/* FR : Cette fonction charge les données du dashboard depuis l'API et retourne les données JSON.
+EN : This function loads the dashboard data from the API and returns the JSON data. */
 async function chargerData() {
     const reponse = await fetch("/api/dashboard");
     const config = await reponse.json();
     return config;
 }
 
+/* FR : Cette fonction charge les liens utiles depuis la FastAPI et retourne les données JSON.
+EN : This function loads the useful links from the FastAPI and returns the JSON data. */
 async function chargerLinks() {
     const reponse = await fetch("/api/links");
     const links = await reponse.json();
     return links;
 }
 
+/* FR : Cette fonction crée un élément HTML pour un item RSS et retourne le bloc HTML.
+EN : This function creates an HTML element for an RSS item and returns the HTML block. */
 function intoHTML_RSS(item) {
     const bloc = document.createElement("div");
     bloc.className = "card";
@@ -34,6 +42,8 @@ function intoHTML_RSS(item) {
     return bloc;
 }
 
+/* FR : Cette fonction crée un élément HTML pour un item de lien utile et retourne le bloc HTML.
+EN : This function creates an HTML element for a useful link item and returns the HTML block. */
 function intoHTML_Links(item) {
     const bloc = document.createElement("div");
     bloc.className = "card";
@@ -52,6 +62,8 @@ function intoHTML_Links(item) {
     return bloc;
 }
 
+/* FR : Cette fonction crée un élément HTML pour un item GitHub et retourne le bloc HTML.
+EN : This function creates an HTML element for a GitHub item and returns the HTML block. */
 function intoHTML_Github(item) {
     const bloc = document.createElement("div");
     bloc.className = "card card-github";
@@ -74,7 +86,8 @@ function intoHTML_Github(item) {
 
     return bloc;
 }
-
+/* FR : Cette fonction affiche le dashboard en chargeant la configuration, les données et les liens, puis en créant les éléments HTML correspondants.
+EN : This function displays the dashboard by loading the configuration, data, and links, then creating the corresponding HTML elements. */
 async function afficherDashboard() {
     const conteneurPrincipal = document.getElementById("dashboard-content");
     const config = await chargerconfig();
@@ -119,3 +132,7 @@ async function afficherDashboard() {
 }
 
 afficherDashboard();
+
+/* FR : Rappel de la fonction afficherDashboard() toutes les 5 minutes pour mettre à jour le contenu du dashboard.
+EN : Reminder of the afficherDashboard() function every 5 minutes to update the dashboard content. */
+setInterval(afficherDashboard, 5 * 60 * 1000); // FR : A revoir EN : To review

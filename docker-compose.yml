@@ -4,6 +4,9 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./config:/app/config
-      - ./backend/cache:/app/backend/cache
+      - ./config:/app/config # FR : Montre le répertoire config pour stocker les fichiers de configuration de l'application. EN : Mounts the config directory to store configuration files for the application.
+      - ./backend/cache:/app/backend/cache # FR : Montre le répertoire cache pour stocker les fichiers mis en cache par l'application backend. EN : Mounts the cache directory to store cached files by the backend application.
     restart: unless-stopped
+
+  
+# TODO : Ajouter des variables d'environnement pour la configuration de l'application ? + Ajouter un service pour le front-end ?

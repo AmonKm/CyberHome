@@ -10,14 +10,17 @@ FRONTEND_DIR = Path(__file__).resolve().parent.parent / "fronted"
 CONFIG_DIR = Path(__file__).resolve().parent.parent / "config"
 CACHE_DIR = Path(__file__).resolve().parent.parent / "backend" / "cache"
 
+
+# FR : Fonction qui récupère les données des flux RSS et des dépôts GitHub en fonction des URLs et requêtes spécifiées dans le dictionnaire lu dans le fichier de configuration (feeds.yaml).
+# EN : Function that fetches the data of RSS feeds and GitHub repositories based on the URLs and queries specified in the dictionary read from the configuration file (feeds.yaml).
 def get_data():
     fichier_cache = CACHE_DIR / "data.json"
     with open(CONFIG_DIR / "feeds.yaml", encoding="utf-8") as f:
         feeds = yaml.safe_load(f)
-    if fichier_cache.exists():
+    if fichier_cache.exists(): # FR : Vérifie si le fichier de cache existe et si son âge est inférieur à 15 minutes (900 secondes). EN : Checks if the cache file exists and if its age is less than 15 minutes (900 seconds).
         age = time.time() - fichier_cache.stat().st_mtime
         if age < 900:
-            with open(fichier_cache, encoding="utf-8") as f:
+            with open(fichier_cache, encoding="utf-8") as f: # FR : Lit les données du fichier de cache et les retourne. EN : Reads the data from the cache file and returns it.
                 return json.load(f)
     
     datas = {"actus-rss": [], "outils-github": []}
@@ -34,10 +37,12 @@ def get_data():
     datas["outils-github"] = datas_github["outils-github"]
     
     CACHE_DIR.mkdir(exist_ok=True, parents=True)
-    with open(fichier_cache, "w") as f:
+    with open(fichier_cache, "w") as f: # FR : Écrit les données récupérées dans le fichier de cache pour une utilisation ultérieure. EN : Writes the fetched data to the cache file for later use.
         json.dump(datas, f)
     return datas
 
+# FR : Création de l'application FastAPI et définition des endpoints pour récupérer les données du dashboard, la configuration du dashboard et les liens.
+# EN : Creation of the FastAPI application and definition of endpoints to fetch dashboard data, dashboard configuration, and links.
 app = FastAPI()
 @app.get("/api/dashboard")
 def endpoint_dashboard():
@@ -53,8 +58,12 @@ def endpoint_links():
     with open(CONFIG_DIR / "links.yaml", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
-
+# FR : Montre le répertoire fronted pour servir les fichiers statiques (HTML, CSS, JS) de l'application front-end.
+# EN : Mounts the fronted directory to serve static files (HTML, CSS, JS) of the front-end application.
 app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="fronted")
+
+# FR : Si le script est exécuté directement, récupère les données et les affiche dans la console.
+# EN : If the script is run directly, fetches the data and prints it to the console.
 if __name__ == '__main__':
     get_data()
     print(get_data())
