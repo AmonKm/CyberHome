@@ -1,3 +1,7 @@
+let sourcesActus = [];
+let indexSourceActuelle = 0;
+let groupesActus = {};
+
 /* FR : Cette fonction charge la configuration du dashboard depuis l'API et retourne les données JSON. 
 EN : This function loads the dashboard configuration from the API and returns the JSON data. */
 async function chargerconfig() {
@@ -10,8 +14,8 @@ async function chargerconfig() {
 EN : This function loads the dashboard data from the API and returns the JSON data. */
 async function chargerData() {
     const reponse = await fetch("/api/dashboard");
-    const config = await reponse.json();
-    return config;
+    const data = await reponse.json(); // <- ce sont des données, correction d'une copie de fonction
+    return data;
 }
 
 /* FR : Cette fonction charge les liens utiles depuis la FastAPI et retourne les données JSON.
@@ -34,12 +38,29 @@ function intoHTML_RSS(item) {
     lien.className = "card-titre";
 
     const desc = document.createElement("p");
-    desc.textContent = item.desc;
+    const texteTronque = item.desc.length > 150 ? item.desc.slice(0, 150) + "…" : item.desc;
+    desc.textContent = texteTronque;
     desc.className = "card-desc";
+
+    const source = document.createElement("span");
+    source.textContent = item.source;
+    source.className = "card-source";
 
     bloc.appendChild(lien);
     bloc.appendChild(desc);
+    bloc.appendChild(source);
     return bloc;
+}
+
+function grouperParSource(items) {
+    const groupes = {};
+    for (const item of items) {
+        if (!groupes[item.source]) {
+            groupes[item.source] = [];
+        }
+        groupes[item.source].push(item);
+    }
+    return groupes;
 }
 
 /* FR : Cette fonction crée un élément HTML pour un item de lien utile et retourne le bloc HTML.
@@ -86,58 +107,95 @@ function intoHTML_Github(item) {
 
     return bloc;
 }
+
 /* FR : Cette fonction affiche le dashboard en chargeant la configuration, les données et les liens, puis en créant les éléments HTML correspondants.
 EN : This function displays the dashboard by loading the configuration, data, and links, then creating the corresponding HTML elements. */
 async function afficherDashboard() {
     const conteneurPrincipal = document.getElementById("dashboard-content");
     conteneurPrincipal.innerHTML = ""; // vide tout le contenu précédent
-    
+
     const config = await chargerconfig();
     const datas = await chargerData();
 
     for (const section of config.sections) {
         const titre = document.createElement("h2");
-        titre.textContent = section.titre;
-        conteneurPrincipal.appendChild(titre);
-        if (section.cle_donnees === "outils-github") {
-        const reponseOptions = await fetch("/api/github-sort-options");
-        const sortOptions = await reponseOptions.json();
-
-        const select = document.createElement("select");
-        select.id = "tri-github";
-        for (const opt of sortOptions) {
-            const option = document.createElement("option");
-            option.value = opt;
-            option.textContent = opt;
-            select.appendChild(option);
+        if (section.cle_donnees === "actus-rss") {
+            titre.id = "titre-actus";
         }
-        select.addEventListener("change", (e) => changerTriGithub(e.target.value));
-        conteneurPrincipal.appendChild(select);
-    }
+        conteneurPrincipal.appendChild(titre);
+
+        if (section.cle_donnees === "outils-github") {
+            const reponseOptions = await fetch("/api/github-sort-options");
+            const sortOptions = await reponseOptions.json();
+
+            const select = document.createElement("select");
+            select.id = "tri-github";
+            for (const opt of sortOptions) {
+                const option = document.createElement("option");
+                option.value = opt;
+                option.textContent = opt;
+                select.appendChild(option);
+            }
+            select.addEventListener("change", (e) => changerTriGithub(e.target.value));
+            conteneurPrincipal.appendChild(select);
+        }
 
         const conteneur = document.createElement("div");
         conteneur.className = "section-container";
+
         if (section.cle_donnees === "outils-github") {
             conteneur.id = "outils-github-container";
         }
+        if (section.cle_donnees === "actus-rss") {
+            conteneur.id = "actus-rss-container";
+        }
+
         const items = datas[section.cle_donnees];
-        if (items.length === 0) {
-            const message = document.createElement("p");
-            message.textContent = "Aucun élément à afficher.";
-            conteneur.appendChild(message);
+
+        if (section.cle_donnees === "actus-rss") {
+            groupesActus = grouperParSource(items);
+            sourcesActus = Object.keys(groupesActus);
+            indexSourceActuelle = 0;
+
+            if (sourcesActus.length === 0) {
+                const message = document.createElement("p");
+                message.textContent = "Aucun élément à afficher.";
+                conteneur.appendChild(message);
+            } else {
+                const boutonPrecedent = document.createElement("button");
+                boutonPrecedent.textContent = "←";
+                boutonPrecedent.className = "nav-arrow";
+                boutonPrecedent.addEventListener("click", sourcePrecedente);
+                conteneurPrincipal.appendChild(boutonPrecedent);
+
+                const boutonSuivant = document.createElement("button");
+                boutonSuivant.textContent = "→";
+                boutonSuivant.className = "nav-arrow";
+                boutonSuivant.addEventListener("click", sourceSuivante);
+                conteneurPrincipal.appendChild(boutonSuivant);
+
+                conteneurPrincipal.appendChild(conteneur);
+                afficherGroupeSource();
+            }
         } else {
-            for (const item of items) {
-                let bloc;
-                if (section.cle_donnees === "outils-github") {
-                    bloc = intoHTML_Github(item);
-                } else if (section.cle_donnees === "actus-rss") {
-                    bloc = intoHTML_RSS(item);
+            titre.textContent = section.titre;
+            if (items.length === 0) {
+                const message = document.createElement("p");
+                message.textContent = "Aucun élément à afficher.";
+                conteneur.appendChild(message);
+            } else {
+                for (const item of items) {
+                    let bloc;
+                    if (section.cle_donnees === "outils-github") {
+                        bloc = intoHTML_Github(item);
+                    }
+                    conteneur.appendChild(bloc);
                 }
-                conteneur.appendChild(bloc);
             }
         }
         conteneurPrincipal.appendChild(conteneur);
     }
+
     const links = await chargerLinks();
     const titreLinks = document.createElement("h2");
     titreLinks.textContent = "Liens Utiles";
@@ -149,6 +207,29 @@ async function afficherDashboard() {
         conteneurLinks.appendChild(bloc);
     }
     conteneurPrincipal.appendChild(conteneurLinks);
+}
+
+function afficherGroupeSource() {
+    const conteneur = document.getElementById("actus-rss-container");
+    const titre = document.getElementById("titre-actus");
+    conteneur.innerHTML = "";
+
+    const nomSource = sourcesActus[indexSourceActuelle];
+    titre.textContent = `Dernières alertes : ${nomSource}`;
+
+    for (const item of groupesActus[nomSource]) {
+        conteneur.appendChild(intoHTML_RSS(item));
+    }
+}
+
+function sourceSuivante() {
+    indexSourceActuelle = (indexSourceActuelle + 1) % sourcesActus.length;
+    afficherGroupeSource();
+}
+
+function sourcePrecedente() {
+    indexSourceActuelle = (indexSourceActuelle - 1 + sourcesActus.length) % sourcesActus.length;
+    afficherGroupeSource();
 }
 
 async function changerTriGithub(sort) {
@@ -167,3 +248,5 @@ afficherDashboard();
 /* FR : Rappel de la fonction afficherDashboard() toutes les 5 minutes pour mettre à jour le contenu du dashboard.
 EN : Reminder of the afficherDashboard() function every 5 minutes to update the dashboard content. */
 setInterval(afficherDashboard, 5 * 60 * 1000); // FR : A revoir EN : To review
+
+// TODO : Commenter le reste des fonctions :D 
