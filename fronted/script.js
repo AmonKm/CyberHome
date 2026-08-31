@@ -1,3 +1,5 @@
+import JSZip from 'https://cdn.jsdelivr.net/npm/jszip@3.10.1/+esm';
+import jsyaml from 'https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/+esm';
 let sourcesActus = [];
 let indexSourceActuelle = 0;
 let groupesActus = {};
@@ -24,6 +26,40 @@ async function chargerLinks() {
     const reponse = await fetch("/api/links");
     const links = await reponse.json();
     return links;
+}
+
+
+async function exporterYAML() {
+    const reponse = await fetch("/api/export-yaml");
+    if (!reponse.ok) {
+        const erreur = await reponse.json();
+        alert(`Erreur lors de l'exportation des fichiers YAML : ${erreur.detail}`);
+        return;
+    }
+
+    const data = await reponse.json();
+    return data;
+}
+
+async function telechargerYAML(data) {
+    if (!data) {
+        return;
+    }
+    const zip = new JSZip();
+    const dossierConfig = zip.folder("config");
+    for (const [nomFichier, contenu] of Object.entries(data)) {
+        const yamlContenu = jsyaml.dump(contenu);
+        dossierConfig.file(nomFichier, yamlContenu);
+    }
+    const blob = await zip.generateAsync({ type: "blob" });
+    const url = URL.createObjectURL(blob);
+    const lienTelechargement = document.createElement("a");
+    lienTelechargement.href = url;
+    lienTelechargement.download = "config.zip";
+    document.body.appendChild(lienTelechargement);
+    lienTelechargement.click();
+    document.body.removeChild(lienTelechargement);
+    window.URL.revokeObjectURL(url);
 }
 
 /* FR : Cette fonction crée un élément HTML pour un item RSS et retourne le bloc HTML.
@@ -153,6 +189,13 @@ async function afficherDashboard() {
         const items = datas[section.cle_donnees];
 
         if (section.cle_donnees === "actus-rss") {
+            const boutonExporter = document.createElement("button");
+            boutonExporter.addEventListener("click", async () => {
+                const dataYAML = await exporterYAML();
+                await telechargerYAML(dataYAML);
+            });
+            boutonExporter.textContent = "Exporter la configuration YAML";
+            conteneurPrincipal.appendChild(boutonExporter);
             groupesActus = grouperParSource(items);
             sourcesActus = Object.keys(groupesActus);
             indexSourceActuelle = 0;

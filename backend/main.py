@@ -2,7 +2,7 @@ from pathlib import Path
 import yaml
 import time
 import json
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fetchers.rss import fetch_rss
 from fetchers.github import fetch_github
@@ -90,6 +90,23 @@ def endpoint_config():
 def endpoint_links():
     with open(CONFIG_DIR / "links.yaml", encoding="utf-8") as f:
         return yaml.safe_load(f)
+
+BASE_DIR = Path(__file__).resolve().parent 
+CHEMIN_EXPORT = BASE_DIR.parent / "config"
+@app.get("/api/export-yaml")
+def endpoint_export_yaml():
+    if not CHEMIN_EXPORT.exists() or not CHEMIN_EXPORT.is_dir():
+        raise HTTPException(status_code=500, detail=f"Le répertoire d'export {CHEMIN_EXPORT} n'existe pas ou n'est pas un répertoire.")
+    data = {}
+    for fichier in CHEMIN_EXPORT.glob("*.y*ml"):
+        try:
+            with open(fichier, "r", encoding="utf-8") as f:
+                    data[fichier.name] = yaml.safe_load(f)
+        except yaml.YAMLError as erreur:
+            raise HTTPException(status_code=500, detail=f"Erreur lors de la lecture du fichier {fichier.name}: {erreur}")
+        except Exception as e2:
+            raise HTTPException(status_code=500, detail=f"Erreur inattendue lors de la lecture du fichier {fichier.name}: {e2}")
+    return data
 
 # FR : Monte le répertoire fronted pour servir les fichiers statiques (HTML, CSS, JS) de l'application front-end.
 # EN : Mounts the fronted directory to serve static files (HTML, CSS, JS) of the front-end application.
