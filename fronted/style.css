@@ -125,7 +125,18 @@ h2 {
     color: #7a7a7a;
     margin: 0;
 }
-
+.export-button {
+    display: block;
+    margin: 2rem auto 0;
+    padding: 0.6rem 1.2rem;
+    background-color: #e63946;
+    color: #f2f2f2;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+}
 .card-github {
     display: flex;
     align-items: center;

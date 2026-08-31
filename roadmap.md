@@ -13,9 +13,9 @@
 - [X] Ajout d'un indicateur sur la page en cas de soucis de fetch
 - [X] Commenter le code (priorité)
 - [X] Permettre de choisir le critère de recherche github (pas forcément par "star" mais choisir les projets "updated" etc.)
+- [X] Note pour plus tard : Créer rep pour les images
 
 ### En cours
-- [ ] Note pour plus tard : Créer rep pour les images
 - [ ] Faire une fonction pour récuperer le nb_items
 - [ ] Permettre de selectionner un article et d'ajouter une page "Favoris" avec une étoile
 
@@ -27,5 +27,5 @@
 - [ ] Lister un ensemble de sources possible (simplement dans sources.md pour du repérage)
 - [ ] Traduire le readme et les commentaires en anglais
 - [ ] Tests / Fichier de tests
-- [ ] Permettre l'export/import de la config yaml pour permettre le partage de configs
+- [ ] Permettre l'export/import de la config yaml pour permettre le partage de configs -> EXPORT FAIT
 - [ ] Créer un .env.exemple avec un token Github pour les appels...

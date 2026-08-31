@@ -189,13 +189,6 @@ async function afficherDashboard() {
         const items = datas[section.cle_donnees];
 
         if (section.cle_donnees === "actus-rss") {
-            const boutonExporter = document.createElement("button");
-            boutonExporter.addEventListener("click", async () => {
-                const dataYAML = await exporterYAML();
-                await telechargerYAML(dataYAML);
-            });
-            boutonExporter.textContent = "Exporter la configuration YAML";
-            conteneurPrincipal.appendChild(boutonExporter);
             groupesActus = grouperParSource(items);
             sourcesActus = Object.keys(groupesActus);
             indexSourceActuelle = 0;
@@ -249,7 +242,15 @@ async function afficherDashboard() {
         const bloc = intoHTML_Links(link);
         conteneurLinks.appendChild(bloc);
     }
+    const boutonExporter = document.createElement("button");
+    boutonExporter.addEventListener("click", async () => {
+    const dataYAML = await exporterYAML();
+    await telechargerYAML(dataYAML);
+    });
+    boutonExporter.textContent = "Exporter la configuration YAML";
+    boutonExporter.className = "export-button";
     conteneurPrincipal.appendChild(conteneurLinks);
+    conteneurPrincipal.appendChild(boutonExporter);
 }
 
 function afficherGroupeSource() {
