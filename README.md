@@ -51,7 +51,8 @@ uvicorn main:app --reload
 Le dashboard est accessible sur `http://127.0.0.1:8000/`.
 
 ## Dashboard actuel [31/08/2026]
-<img width="1917" height="943" alt="image" src="https://github.com/user-attachments/assets/976c1e58-9dc2-4fba-afc8-a9836e69cb23" />
+<img width="1917" height="937" alt="image" src="https://github.com/user-attachments/assets/dc91bb83-683d-4003-8e7b-c157c8c8a207" />
+
 
 
 
