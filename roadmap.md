@@ -15,6 +15,7 @@
 - [X] Permettre de choisir le critère de recherche github (pas forcément par "star" mais choisir les projets "updated" etc.)
 
 ### En cours
+- [ ] Note pour plus tard : Créer rep pour les images
 - [ ] Faire une fonction pour récuperer le nb_items
 - [ ] Permettre de selectionner un article et d'ajouter une page "Favoris" avec une étoile
 

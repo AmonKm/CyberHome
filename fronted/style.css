@@ -79,6 +79,13 @@ h2 {
     box-shadow: 0 0 4px rgba(230, 57, 70, 0.5);
 }
 
+.logo {
+    display: block;
+    margin: 0 auto;
+    max-width: 550px;
+    height: auto;
+}
+
 .card {
     background-color: #141414;
     padding: 1.3rem;
