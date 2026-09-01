@@ -259,7 +259,7 @@ function afficherGroupeSource() {
     conteneur.innerHTML = "";
 
     const nomSource = sourcesActus[indexSourceActuelle];
-    titre.textContent = `Dernières alertes : ${nomSource}`;
+    titre.textContent = `Dernières alertes / articles : ${nomSource}`; // FR : TODO séparer la section articles et alertes EN : TODO separate the articles and alerts section
 
     for (const item of groupesActus[nomSource]) {
         conteneur.appendChild(intoHTML_RSS(item));
