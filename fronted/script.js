@@ -3,6 +3,7 @@ import jsyaml from 'https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/+esm';
 let sourcesActus = [];
 let indexSourceActuelle = 0;
 let groupesActus = {};
+let titreActus = "";
 
 /* FR : Cette fonction charge la configuration du dashboard depuis l'API et retourne les données JSON. 
 EN : This function loads the dashboard configuration from the API and returns the JSON data. */
@@ -211,6 +212,7 @@ async function afficherDashboard() {
                 conteneurPrincipal.appendChild(boutonSuivant);
 
                 conteneurPrincipal.appendChild(conteneur);
+                titreActus = section.titre;
                 afficherGroupeSource();
             }
         } else {
@@ -259,8 +261,8 @@ function afficherGroupeSource() {
     conteneur.innerHTML = "";
 
     const nomSource = sourcesActus[indexSourceActuelle];
-    titre.textContent = `Dernières alertes / articles : ${nomSource}`; // FR : TODO séparer la section articles et alertes EN : TODO separate the articles and alerts section
-
+    titre.textContent = `${titreActus} : ${nomSource}`;
+    
     for (const item of groupesActus[nomSource]) {
         conteneur.appendChild(intoHTML_RSS(item));
     }
