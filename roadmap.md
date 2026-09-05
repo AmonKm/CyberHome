@@ -14,18 +14,25 @@
 - [X] Commenter le code (priorité)
 - [X] Permettre de choisir le critère de recherche github (pas forcément par "star" mais choisir les projets "updated" etc.)
 - [X] Note pour plus tard : Créer rep pour les images
+- [X] Permettre l'export/import de la config yaml pour permettre le partage de configs
 
 ### En cours
-- [ ] Faire une fonction pour récuperer le nb_items
-- [ ] Permettre de selectionner un article et d'ajouter une page "Favoris" avec une étoile
+
 
 ### A faire 
-- [ ] Persister le choix de tri (écrire dans le cache et vérifier le sort) 
-- [ ] Pour beaucoup plus tard, permettre le suivi de projets
-- [ ] Permettre un management de la page web à la main
-- [ ] Faire une page de gestion des sources avec une liste prédéfinie
-- [ ] Lister un ensemble de sources possible (simplement dans sources.md pour du repérage)
-- [ ] Traduire le readme et les commentaires en anglais
-- [ ] Tests / Fichier de tests
-- [ ] Permettre l'export/import de la config yaml pour permettre le partage de configs -> EXPORT FAIT
-- [ ] Créer un .env.exemple avec un token Github pour les appels...
+- [ ] Sécuriser l'import YAML (validation, erreurs)
+- [ ] .env.example avec token GitHub
+- [ ] Tests de base
+- [ ] Persister le tri GitHub après reload
+- [ ] Favoris (étoile + page dédiée)
+- [ ] Page d'admin pour éditer les YAML ?
+- [ ] Liste de gestion de sources
+- [ ] Sources RSS dans sources.md
+- [ ] README / commentaires en anglais
+- [ ] Suivi de projets
+- [ ] Boutton pour refresh la page
+- [ ] Affiche du dernier update (fetch)
+- [ ] Voir pour consommation de CISA kev
+
+
+
