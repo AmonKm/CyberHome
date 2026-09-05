@@ -41,6 +41,43 @@ async function exporterYAML() {
     const data = await reponse.json();
     return data;
 }
+async function importerYAML(event) { // Revoir selon la doc MDN
+    const fichier = event.target.files[0];
+    if (!fichier) return;
+
+    if (!fichier.name.endsWith(".zip")) {
+        alert("Le fichier doît être un .zip !");
+        return;
+    }
+    
+    const zip = await JSZip.loadAsync(fichier);
+    const configs = {};
+    for (const [chemin, fichierzip] of Object.entries(zip.files)) {
+        if (fichierzip.dir) continue;
+
+        const nomFichier = chemin.split("/").pop();
+        if (!nomFichier.endsWith(".yaml") && !nomFichier.endsWith(".yml")) 
+            continue;
+
+        const contenu = await fichierzip.async("string");
+        configs[nomFichier] = jsyaml.load(contenu);
+    }
+
+        const response = await fetch("/api/import-yaml", {
+            method: "POST",
+            headers: {"Content-Type": "application/json" },
+            body: JSON.stringify(configs)
+        });
+        if (!response.ok) {
+            const erreur = await response.json();
+            alert(`Erreur lors de l\'importation des fichiers YAML : ${erreur.detail}`);
+            return;
+        }
+
+        alert("Importation des fichiers YAML réussie !");
+        afficherDashboard();
+    }
+
 
 async function telechargerYAML(data) {
     if (!data) {
@@ -244,6 +281,20 @@ async function afficherDashboard() {
         const bloc = intoHTML_Links(link);
         conteneurLinks.appendChild(bloc);
     }
+    const inputImporter = document.createElement("input");
+    inputImporter.type = "file";
+    inputImporter.accept = ".zip";
+    inputImporter.style.display = "none";
+    inputImporter.addEventListener("change", importerYAML);
+
+    const boutonImporter = document.createElement("button");
+    boutonImporter.textContent = "Importer la configuration YAML";    
+    boutonImporter.className ="export-button"; // Rappel : changer le nom de la classe :)
+    boutonImporter.addEventListener("click", () => inputImporter.click());
+
+
+    
+    
     const boutonExporter = document.createElement("button");
     boutonExporter.addEventListener("click", async () => {
     const dataYAML = await exporterYAML();
@@ -253,6 +304,8 @@ async function afficherDashboard() {
     boutonExporter.className = "export-button";
     conteneurPrincipal.appendChild(conteneurLinks);
     conteneurPrincipal.appendChild(boutonExporter);
+    conteneurPrincipal.appendChild(inputImporter);
+    conteneurPrincipal.appendChild(boutonImporter);
 }
 
 function afficherGroupeSource() {
