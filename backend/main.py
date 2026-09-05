@@ -91,6 +91,18 @@ def endpoint_links():
     with open(CONFIG_DIR / "links.yaml", encoding="utf-8") as f:
         return yaml.safe_load(f)
 
+FICHIERS_AUTORISES = {"feeds.yaml", "dashboard.yaml", "links.yaml"}
+@app.post("/api/import-yaml")
+def endpoint_import_yaml(configs:dict):
+    for nom_fichier, contenu in configs.items():
+        if nom_fichier not in FICHIERS_AUTORISES:
+            raise HTTPException(status_code=400, detail=f"Fichier non autorisé : {nom_fichier}")
+        with open (CONFIG_DIR / nom_fichier, 'w', encoding="utf-8") as f:
+            yaml.safe_dump(contenu, f, allow_unicode=True)
+        
+    return {"status": "ok"}
+
+
 BASE_DIR = Path(__file__).resolve().parent 
 CHEMIN_EXPORT = BASE_DIR.parent / "config"
 @app.get("/api/export-yaml")
