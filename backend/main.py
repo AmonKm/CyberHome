@@ -90,6 +90,34 @@ def endpoint_config():
 def endpoint_links():
     with open(CONFIG_DIR / "links.yaml", encoding="utf-8") as f:
         return yaml.safe_load(f)
+    
+@app.post("/api/favoris")
+def endpoint_favoris(data:dict):
+    categorie = data["categorie"]
+    item = data["item"]
+    print(categorie, item)
+    
+    CACHE_DIR.mkdir(exist_ok=True, parents=True)
+    fichier_cache = CACHE_DIR / "favoris.json"
+    if fichier_cache.exists():
+            with open(fichier_cache, "r", encoding="utf-8") as f:
+                contenu = json.load(f)
+    else:
+        contenu = {"actus-rss": [], "outils-github": []}
+
+    present = any(fav["url"] == item["url"] for fav in contenu[categorie])
+    if present:
+        contenu[categorie] = [fav for fav in contenu[categorie] if fav["url"] != item["url"]]
+        message = f"{item['title']} retiré des favoris"
+    else :
+        contenu[categorie].append(item)
+        message = f"{item['title']} ajouté aux favoris"
+
+    with open(fichier_cache, "w", encoding="utf-8") as f:
+        json.dump(contenu, f)
+
+    return {"message": message}
+
 
 FICHIERS_AUTORISES = {"feeds.yaml", "dashboard.yaml", "links.yaml"}
 @app.post("/api/import-yaml")
