@@ -100,11 +100,50 @@ async function telechargerYAML(data) {
     window.URL.revokeObjectURL(url);
 }
 
+async function Star_src(categorie, item) {
+    try {
+        const response = await fetch('/api/favoris', {
+            method: 'POST' ,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({categorie: categorie, item: item }) 
+        });
+
+        if (!response.ok) {
+            throw new Error("Erreur de la sauvegarde des favoris côté serveur")
+        }
+
+        const result = await response.json()
+        console.log("Sauvegarde réussie :", result.message);
+    }   catch (error) {
+        console.error("Impossible de sauvegarder l'élément :", error);
+    }
+}
+
 /* FR : Cette fonction crée un élément HTML pour un item RSS et retourne le bloc HTML.
 EN : This function creates an HTML element for an RSS item and returns the HTML block. */
 function intoHTML_RSS(item) {
     const bloc = document.createElement("div");
     bloc.className = "card";
+
+    const btnStar = document.createElement("button");
+    btnStar.className = "btn-star";
+    btnStar.setAttribute("aria-label", "Ajouter aux favoris");
+
+    // 2. L'icône reste à l'intérieur du bouton
+    const star = document.createElement("span");
+    star.textContent = "☆"; // étoile vide
+    star.className = "star-icon";
+
+    btnStar.appendChild(star);
+
+    btnStar.addEventListener('click', (evenement) => {
+        evenement.preventDefault();
+        const estActif = star.textContent === "★";
+        star.textContent = estActif ? "☆" : "★";
+        Star_src("actus-rss",item);
+    });
 
     const lien = document.createElement("a");
     lien.href = item.url;
@@ -120,6 +159,7 @@ function intoHTML_RSS(item) {
     source.textContent = item.source;
     source.className = "card-source";
 
+    bloc.appendChild(btnStar);
     bloc.appendChild(lien);
     bloc.appendChild(desc);
     bloc.appendChild(source);

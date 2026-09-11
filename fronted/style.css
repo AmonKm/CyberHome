@@ -87,6 +87,7 @@ h2 {
 }
 
 .card {
+    position: relative;
     background-color: #141414;
     padding: 1.3rem;
     transition: background-color 0.15s ease;
@@ -96,6 +97,35 @@ h2 {
     background-color: #1a1a1a;
 }
 
+.btn-star {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.btn-star:hover {
+    background-color: rgba(230, 57, 70, 0.1);
+    transform: scale(1.15);
+}
+
+.star-icon {
+    font-size: 1.3rem;
+    color: #5c5c5c;
+    transition: color 0.15s ease;
+}
+
+.btn-star:hover .star-icon {
+    color: #e63946;
+}
 .card-titre {
     display: block;
     font-weight: 500;
