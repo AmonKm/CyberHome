@@ -1,7 +1,7 @@
 links:
-  - title: "Compte GitHub"
-    desc: "Mon compte GitHub personnel"
-    url: "https://github.com/AmonKm"
-  - title: "HackTricks"
-    desc: "Wiki hacking et sécurité offensive"
-    url: "https://book.hacktricks.xyz"
+- desc: Mon compte GitHub personnel
+  title: Compte GitHub
+  url: https://github.com/AmonKm
+- desc: Wiki de techniques de pentest et de contournement
+  title: HackTricks
+  url: https://book.hacktricks.xyz
