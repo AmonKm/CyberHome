@@ -15,18 +15,18 @@
 - [X] Permettre de choisir le critère de recherche github (pas forcément par "star" mais choisir les projets "updated" etc.)
 - [X] Note pour plus tard : Créer rep pour les images
 - [X] Permettre l'export/import de la config yaml pour permettre le partage de configs
+- [X] Favoris (Pouvoir stocker un item dans un cache fav en appuyant sur un bouton)
 
 ### En cours
-
+- [ ] .env.example avec token GitHub
+- [ ] Liste de gestion de sources
+- [ ] Favoris (Pouvoir voir l'ensemble des favoris dans une page favoris.html)
 
 ### A faire 
 - [ ] Sécuriser l'import YAML (validation, erreurs)
-- [ ] .env.example avec token GitHub
 - [ ] Tests de base
 - [ ] Persister le tri GitHub après reload
-- [ ] Favoris (étoile + page dédiée)
 - [ ] Page d'admin pour éditer les YAML ?
-- [ ] Liste de gestion de sources
 - [ ] Sources RSS dans sources.md
 - [ ] README / commentaires en anglais
 - [ ] Suivi de projets
