@@ -16,11 +16,12 @@
 - [X] Note pour plus tard : Créer rep pour les images
 - [X] Permettre l'export/import de la config yaml pour permettre le partage de configs
 - [X] Favoris (Pouvoir stocker un item dans un cache fav en appuyant sur un bouton)
+- [X] Favoris (Pouvoir voir l'ensemble des favoris dans une page favoris.html)
 
 ### En cours
+- [ ] Correction cohérence des étoiles (vide si non fav etc... Actuellement non cohérent)
 - [ ] .env.example avec token GitHub
 - [ ] Liste de gestion de sources
-- [ ] Favoris (Pouvoir voir l'ensemble des favoris dans une page favoris.html)
 
 ### A faire 
 - [ ] Sécuriser l'import YAML (validation, erreurs)
