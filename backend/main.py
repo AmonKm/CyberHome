@@ -41,6 +41,14 @@ def get_data():
         json.dump(datas, f)
     return datas
 
+
+def lire_favoris():
+    fichier_cache = CACHE_DIR / "favoris.json"
+    if fichier_cache.exists():
+        with open(fichier_cache, encoding="utf-8") as f:
+            return json.load(f)
+    return {"actus-rss": [], "outils-github": []}
+
 # FR : Création de l'application FastAPI et définition des endpoints pour récupérer les données du dashboard, la configuration du dashboard et les liens.
 # EN : Creation of the FastAPI application and definition of endpoints to fetch dashboard data, dashboard configuration, and links.
 app = FastAPI()
@@ -95,15 +103,9 @@ def endpoint_links():
 def endpoint_favoris(data:dict):
     categorie = data["categorie"]
     item = data["item"]
-    print(categorie, item)
-    
+    contenu = lire_favoris()
     CACHE_DIR.mkdir(exist_ok=True, parents=True)
     fichier_cache = CACHE_DIR / "favoris.json"
-    if fichier_cache.exists():
-            with open(fichier_cache, "r", encoding="utf-8") as f:
-                contenu = json.load(f)
-    else:
-        contenu = {"actus-rss": [], "outils-github": []}
 
     present = any(fav["url"] == item["url"] for fav in contenu[categorie])
     if present:
@@ -117,6 +119,10 @@ def endpoint_favoris(data:dict):
         json.dump(contenu, f)
 
     return {"message": message}
+
+@app.get("/api/favoris")
+def get_endpoint_favoris():
+    return lire_favoris()
 
 
 FICHIERS_AUTORISES = {"feeds.yaml", "dashboard.yaml", "links.yaml"}
