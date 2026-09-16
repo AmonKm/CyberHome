@@ -22,10 +22,10 @@
 - [ ] Correction cohérence des étoiles (vide si non fav etc... Actuellement non cohérent)
 - [ ] .env.example avec token GitHub
 - [ ] Liste de gestion de sources
+- [ ] Tests de base
 
 ### A faire 
 - [ ] Sécuriser l'import YAML (validation, erreurs)
-- [ ] Tests de base
 - [ ] Persister le tri GitHub après reload
 - [ ] Page d'admin pour éditer les YAML ?
 - [ ] Sources RSS dans sources.md
