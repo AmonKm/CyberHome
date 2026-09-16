@@ -19,6 +19,7 @@
 - [X] Favoris (Pouvoir voir l'ensemble des favoris dans une page favoris.html)
 
 ### En cours
+- [ ] Revoir le typage (pylance ahah)
 - [ ] Correction cohérence des étoiles (vide si non fav etc... Actuellement non cohérent)
 - [ ] .env.example avec token GitHub
 - [ ] Liste de gestion de sources
